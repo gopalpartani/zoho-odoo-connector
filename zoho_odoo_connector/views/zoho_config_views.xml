@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Zoho Configuration Form View -->
+    <record id="view_zoho_config_form" model="ir.ui.view">
+        <field name="name">zoho.config.form</field>
+        <field name="model">zoho.config</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Books Configuration">
+                <header>
+                    <button name="generate_access_token" string="Generate Access Token" type="object" class="oe_highlight" attrs="{'invisible': [('client_id', '=', False), ('client_secret', '=', False), ('refresh_token', '=', False)]}"/>
+                    <button name="test_connection" string="Test Connection" type="object" class="btn-primary" attrs="{'invisible': [('access_token', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="API Credentials">
+                            <field name="client_id" required="1"/>
+                            <field name="client_secret" required="1" password="1"/>
+                            <field name="refresh_token" required="1" password="1"/>
+                            <field name="organization_id" required="1"/>
+                        </group>
+                        <group string="Status">
+                            <field name="access_token" readonly="1"/>
+                            <field name="token_expiry" readonly="1"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert" style="margin-top: 10px;">
+                        <p><strong>How to get Zoho Books API credentials:</strong></p>
+                        <ol>
+                            <li>Go to <a href="https://api-console.zoho.com/" target="_blank">Zoho API Console</a></li>
+                            <li>Create a new client (Self Client)</li>
+                            <li>Set the scope to "ZohoBooks.fullaccess.all"</li>
+                            <li>Generate the code and then exchange it for a refresh token</li>
+                            <li>Find your organization ID in Zoho Books under Settings > Organization Profile</li>
+                        </ol>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Zoho Configuration Tree View -->
+    <record id="view_zoho_config_tree" model="ir.ui.view">
+        <field name="name">zoho.config.tree</field>
+        <field name="model">zoho.config</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Books Configurations">
+                <field name="name"/>
+                <field name="organization_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+                <field name="token_expiry"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Zoho Configuration Search View -->
+    <record id="view_zoho_config_search" model="ir.ui.view">
+        <field name="name">zoho.config.search</field>
+        <field name="model">zoho.config</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Books Configurations">
+                <field name="name"/>
+                <field name="organization_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Active" name="group_by_active" context="{'group_by': 'is_active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Zoho Configuration Action -->
+    <record id="action_zoho_config" model="ir.actions.act_window">
+        <field name="name">Zoho Books Configuration</field>
+        <field name="res_model">zoho.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_config_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Zoho Books configuration
+            </p>
+            <p>
+                Configure your Zoho Books API credentials to start importing data.
+            </p>
+        </field>
+    </record>
+</odoo>

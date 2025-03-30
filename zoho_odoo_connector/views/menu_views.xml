@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_zoho_root"
+              name="Zoho Books"
+              web_icon="zoho_odoo_connector,static/description/icon.png"
+              sequence="100"/>
+    
+    <!-- Import Menu -->
+    <menuitem id="menu_zoho_import"
+              name="Import"
+              parent="menu_zoho_root"
+              sequence="10"/>
+    
+    <menuitem id="menu_zoho_import_wizard"
+              name="Import from Zoho Books"
+              parent="menu_zoho_import"
+              action="action_zoho_import_wizard"
+              sequence="10"/>
+    
+    <menuitem id="menu_zoho_import_history"
+              name="Import History"
+              parent="menu_zoho_import"
+              action="action_zoho_import_history"
+              sequence="20"/>
+    
+    <menuitem id="menu_zoho_import_log"
+              name="Import Logs"
+              parent="menu_zoho_import"
+              action="action_zoho_import_log"
+              sequence="30"/>
+    
+    <!-- Mapping Menu -->
+    <menuitem id="menu_zoho_mapping"
+              name="Mappings"
+              parent="menu_zoho_root"
+              sequence="20"/>
+    
+    <menuitem id="menu_zoho_contact_mapping"
+              name="Contacts"
+              parent="menu_zoho_mapping"
+              action="action_zoho_contact_mapping"
+              sequence="10"/>
+    
+    <menuitem id="menu_zoho_account_mapping"
+              name="Accounts"
+              parent="menu_zoho_mapping"
+              action="action_zoho_account_mapping"
+              sequence="20"/>
+    
+    <menuitem id="menu_zoho_tax_mapping"
+              name="Taxes"
+              parent="menu_zoho_mapping"
+              action="action_zoho_tax_mapping"
+              sequence="30"/>
+    
+    <menuitem id="menu_zoho_payment_term_mapping"
+              name="Payment Terms"
+              parent="menu_zoho_mapping"
+              action="action_zoho_payment_term_mapping"
+              sequence="40"/>
+    
+    <menuitem id="menu_zoho_currency_mapping"
+              name="Currencies"
+              parent="menu_zoho_mapping"
+              action="action_zoho_currency_mapping"
+              sequence="50"/>
+    
+    <menuitem id="menu_zoho_journal_mapping"
+              name="Journals"
+              parent="menu_zoho_mapping"
+              action="action_zoho_journal_mapping"
+              sequence="60"/>
+    
+    <menuitem id="menu_zoho_item_mapping"
+              name="Items"
+              parent="menu_zoho_mapping"
+              action="action_zoho_item_mapping"
+              sequence="70"/>
+    
+    <menuitem id="menu_zoho_document_mapping"
+              name="Documents"
+              parent="menu_zoho_mapping"
+              action="action_zoho_document_mapping"
+              sequence="80"/>
+    
+    <!-- Configuration Menu -->
+    <menuitem id="menu_zoho_config"
+              name="Configuration"
+              parent="menu_zoho_root"
+              sequence="30"/>
+    
+    <menuitem id="menu_zoho_api_config"
+              name="API Configuration"
+              parent="menu_zoho_config"
+              action="action_zoho_config"
+              sequence="10"/>
+</odoo>

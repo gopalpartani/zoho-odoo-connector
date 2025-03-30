@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Account Mapping Views -->
+    <record id="view_zoho_account_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.account.mapping.form</field>
+        <field name="model">zoho.account.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Account Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_account_id"/>
+                            <field name="zoho_account_name"/>
+                            <field name="zoho_account_type"/>
+                        </group>
+                        <group>
+                            <field name="odoo_account_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_account_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.account.mapping.tree</field>
+        <field name="model">zoho.account.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Account Mappings">
+                <field name="zoho_account_name"/>
+                <field name="zoho_account_type"/>
+                <field name="odoo_account_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_account_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.account.mapping.search</field>
+        <field name="model">zoho.account.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Account Mappings">
+                <field name="zoho_account_name"/>
+                <field name="zoho_account_id"/>
+                <field name="odoo_account_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Account" name="group_by_odoo_account" context="{'group_by': 'odoo_account_id'}"/>
+                    <filter string="Account Type" name="group_by_account_type" context="{'group_by': 'zoho_account_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_account_mapping" model="ir.actions.act_window">
+        <field name="name">Account Mappings</field>
+        <field name="res_model">zoho.account.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_account_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first account mapping
+            </p>
+            <p>
+                Map Zoho Books accounts to Odoo accounts.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tax Mapping Views -->
+    <record id="view_zoho_tax_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.tax.mapping.form</field>
+        <field name="model">zoho.tax.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Tax Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_tax_id"/>
+                            <field name="zoho_tax_name"/>
+                            <field name="zoho_tax_percentage"/>
+                        </group>
+                        <group>
+                            <field name="odoo_tax_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_tax_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.tax.mapping.tree</field>
+        <field name="model">zoho.tax.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Tax Mappings">
+                <field name="zoho_tax_name"/>
+                <field name="zoho_tax_percentage"/>
+                <field name="odoo_tax_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_tax_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.tax.mapping.search</field>
+        <field name="model">zoho.tax.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Tax Mappings">
+                <field name="zoho_tax_name"/>
+                <field name="zoho_tax_id"/>
+                <field name="odoo_tax_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Tax" name="group_by_odoo_tax" context="{'group_by': 'odoo_tax_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_tax_mapping" model="ir.actions.act_window">
+        <field name="name">Tax Mappings</field>
+        <field name="res_model">zoho.tax.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_tax_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first tax mapping
+            </p>
+            <p>
+                Map Zoho Books taxes to Odoo taxes.
+            </p>
+        </field>
+    </record>
+
+    <!-- Payment Term Mapping Views -->
+    <record id="view_zoho_payment_term_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.payment.term.mapping.form</field>
+        <field name="model">zoho.payment.term.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Payment Term Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_term_id"/>
+                            <field name="zoho_term_name"/>
+                        </group>
+                        <group>
+                            <field name="odoo_term_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_payment_term_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.payment.term.mapping.tree</field>
+        <field name="model">zoho.payment.term.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Payment Term Mappings">
+                <field name="zoho_term_name"/>
+                <field name="odoo_term_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_payment_term_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.payment.term.mapping.search</field>
+        <field name="model">zoho.payment.term.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Payment Term Mappings">
+                <field name="zoho_term_name"/>
+                <field name="zoho_term_id"/>
+                <field name="odoo_term_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Payment Term" name="group_by_odoo_term" context="{'group_by': 'odoo_term_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_payment_term_mapping" model="ir.actions.act_window">
+        <field name="name">Payment Term Mappings</field>
+        <field name="res_model">zoho.payment.term.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_payment_term_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first payment term mapping
+            </p>
+            <p>
+                Map Zoho Books payment terms to Odoo payment terms.
+            </p>
+        </field>
+    </record>
+
+    <!-- Currency Mapping Views -->
+    <record id="view_zoho_currency_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.currency.mapping.form</field>
+        <field name="model">zoho.currency.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Currency Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_currency_id"/>
+                            <field name="zoho_currency_name"/>
+                            <field name="zoho_currency_code"/>
+                        </group>
+                        <group>
+                            <field name="odoo_currency_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_currency_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.currency.mapping.tree</field>
+        <field name="model">zoho.currency.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Currency Mappings">
+                <field name="zoho_currency_name"/>
+                <field name="zoho_currency_code"/>
+                <field name="odoo_currency_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_currency_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.currency.mapping.search</field>
+        <field name="model">zoho.currency.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Currency Mappings">
+                <field name="zoho_currency_name"/>
+                <field name="zoho_currency_code"/>
+                <field name="odoo_currency_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Currency" name="group_by_odoo_currency" context="{'group_by': 'odoo_currency_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_currency_mapping" model="ir.actions.act_window">
+        <field name="name">Currency Mappings</field>
+        <field name="res_model">zoho.currency.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_currency_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first currency mapping
+            </p>
+            <p>
+                Map Zoho Books currencies to Odoo currencies.
+            </p>
+        </field>
+    </record>
+
+    <!-- Contact Mapping Views -->
+    <record id="view_zoho_contact_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.contact.mapping.form</field>
+        <field name="model">zoho.contact.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Contact Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_contact_id"/>
+                            <field name="zoho_contact_name"/>
+                            <field name="zoho_contact_type"/>
+                        </group>
+                        <group>
+                            <field name="odoo_partner_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_contact_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.contact.mapping.tree</field>
+        <field name="model">zoho.contact.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Contact Mappings">
+                <field name="zoho_contact_name"/>
+                <field name="zoho_contact_type"/>
+                <field name="odoo_partner_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_contact_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.contact.mapping.search</field>
+        <field name="model">zoho.contact.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Contact Mappings">
+                <field name="zoho_contact_name"/>
+                <field name="zoho_contact_id"/>
+                <field name="odoo_partner_id"/>
+                <filter string="Customers" name="customers" domain="[('zoho_contact_type', 'in', ['customer', 'both'])]"/>
+                <filter string="Vendors" name="vendors" domain="[('zoho_contact_type', 'in', ['vendor', 'both'])]"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Contact Type" name="group_by_contact_type" context="{'group_by': 'zoho_contact_type'}"/>
+                    <filter string="Odoo Partner" name="group_by_odoo_partner" context="{'group_by': 'odoo_partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_contact_mapping" model="ir.actions.act_window">
+        <field name="name">Contact Mappings</field>
+        <field name="res_model">zoho.contact.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_contact_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first contact mapping
+            </p>
+            <p>
+                Map Zoho Books contacts to Odoo partners.
+            </p>
+        </field>
+    </record>
+
+    <!-- Journal Mapping Views -->
+    <record id="view_zoho_journal_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.journal.mapping.form</field>
+        <field name="model">zoho.journal.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Journal Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_journal_id"/>
+                            <field name="zoho_journal_name"/>
+                        </group>
+                        <group>
+                            <field name="odoo_journal_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_journal_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.journal.mapping.tree</field>
+        <field name="model">zoho.journal.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Journal Mappings">
+                <field name="zoho_journal_name"/>
+                <field name="odoo_journal_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_journal_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.journal.mapping.search</field>
+        <field name="model">zoho.journal.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Journal Mappings">
+                <field name="zoho_journal_name"/>
+                <field name="zoho_journal_id"/>
+                <field name="odoo_journal_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Journal" name="group_by_odoo_journal" context="{'group_by': 'odoo_journal_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_journal_mapping" model="ir.actions.act_window">
+        <field name="name">Journal Mappings</field>
+        <field name="res_model">zoho.journal.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_journal_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first journal mapping
+            </p>
+            <p>
+                Map Zoho Books journals to Odoo journals.
+            </p>
+        </field>
+    </record>
+
+    <!-- Item Mapping Views -->
+    <record id="view_zoho_item_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.item.mapping.form</field>
+        <field name="model">zoho.item.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Item Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_item_id"/>
+                            <field name="zoho_item_name"/>
+                        </group>
+                        <group>
+                            <field name="odoo_product_id"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_item_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.item.mapping.tree</field>
+        <field name="model">zoho.item.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Item Mappings">
+                <field name="zoho_item_name"/>
+                <field name="odoo_product_id"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_item_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.item.mapping.search</field>
+        <field name="model">zoho.item.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Item Mappings">
+                <field name="zoho_item_name"/>
+                <field name="zoho_item_id"/>
+                <field name="odoo_product_id"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Odoo Product" name="group_by_odoo_product" context="{'group_by': 'odoo_product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_item_mapping" model="ir.actions.act_window">
+        <field name="name">Item Mappings</field>
+        <field name="res_model">zoho.item.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_item_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first item mapping
+            </p>
+            <p>
+                Map Zoho Books items to Odoo products.
+            </p>
+        </field>
+    </record>
+
+    <!-- Document Mapping Views -->
+    <record id="view_zoho_document_mapping_form" model="ir.ui.view">
+        <field name="name">zoho.document.mapping.form</field>
+        <field name="model">zoho.document.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Document Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="zoho_document_id"/>
+                            <field name="zoho_document_number"/>
+                            <field name="zoho_document_type"/>
+                        </group>
+                        <group>
+                            <field name="odoo_document_model"/>
+                            <field name="odoo_document_id"/>
+                            <field name="odoo_document_name"/>
+                            <field name="is_active"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_document_mapping_tree" model="ir.ui.view">
+        <field name="name">zoho.document.mapping.tree</field>
+        <field name="model">zoho.document.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Zoho Document Mappings">
+                <field name="zoho_document_number"/>
+                <field name="zoho_document_type"/>
+                <field name="odoo_document_name"/>
+                <field name="is_active"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_document_mapping_search" model="ir.ui.view">
+        <field name="name">zoho.document.mapping.search</field>
+        <field name="model">zoho.document.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Search Zoho Document Mappings">
+                <field name="zoho_document_number"/>
+                <field name="zoho_document_id"/>
+                <field name="odoo_document_name"/>
+                <filter string="Invoices" name="invoices" domain="[('zoho_document_type', '=', 'invoice')]"/>
+                <filter string="Bills" name="bills" domain="[('zoho_document_type', '=', 'bill')]"/>
+                <filter string="Journal Entries" name="journals" domain="[('zoho_document_type', '=', 'journal')]"/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Document Type" name="group_by_document_type" context="{'group_by': 'zoho_document_type'}"/>
+                    <filter string="Odoo Model" name="group_by_odoo_model" context="{'group_by': 'odoo_document_model'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_document_mapping" model="ir.actions.act_window">
+        <field name="name">Document Mappings</field>
+        <field name="res_model">zoho.document.mapping</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_document_mapping_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first document mapping
+            </p>
+            <p>
+                Map Zoho Books documents to Odoo documents.
+            </p>
+        </field>
+    </record>
+</odoo>

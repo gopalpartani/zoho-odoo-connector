@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zoho_import_wizard_form" model="ir.ui.view">
+        <field name="name">zoho.import.wizard.form</field>
+        <field name="model">zoho.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import from Zoho Books">
+                <field name="state" invisible="1"/>
+                <field name="import_history_id" invisible="1"/>
+                <field name="retry_mode" invisible="1"/>
+                <field name="retry_record_ids" invisible="1"/>
+                
+                <!-- Configuration State -->
+                <div states="config">
+                    <group>
+                        <group>
+                            <field name="import_type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="create_missing"/>
+                            <field name="update_existing"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_preview" string="Preview" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </div>
+                
+                <!-- Preview State -->
+                <div states="preview">
+                    <group>
+                        <field name="preview_count" readonly="1"/>
+                        <field name="preview_data" readonly="1" widget="ace" options="{'mode': 'json'}" attrs="{'invisible': [('preview_data', '=', False)]}"/>
+                    </group>
+                    <footer>
+                        <button name="action_import" string="Import" type="object" class="btn-primary"/>
+                        <button string="Back" name="action_back_to_config" type="object" class="btn-secondary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </div>
+                
+                <!-- Importing State -->
+                <div states="importing">
+                    <group>
+                        <field name="message" readonly="1"/>
+                        <field name="progress" widget="progressbar"/>
+                    </group>
+                    <footer>
+                        <button name="action_do_import" string="Start Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </div>
+                
+                <!-- Done State -->
+                <div states="done">
+                    <group>
+                        <field name="message" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_view_import_history" string="View Import History" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_zoho_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import from Zoho Books</field>
+        <field name="res_model">zoho.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

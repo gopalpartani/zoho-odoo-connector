@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import History Views -->
+    <record id="view_zoho_import_history_form" model="ir.ui.view">
+        <field name="name">zoho.import.history.form</field>
+        <field name="model">zoho.import.history</field>
+        <field name="arch" type="xml">
+            <form string="Import History">
+                <header>
+                    <button name="action_retry_failed" string="Retry Failed" type="object" class="oe_highlight" attrs="{'invisible': [('status', 'not in', ['failed', 'partially_completed'])]}"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,in_progress,completed,failed,partially_completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="import_type"/>
+                            <field name="import_date"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="total_records"/>
+                            <field name="processed_records"/>
+                            <field name="successful_records"/>
+                            <field name="failed_records"/>
+                            <field name="skipped_records"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Logs" name="logs">
+                            <field name="log_ids">
+                                <tree>
+                                    <field name="create_date"/>
+                                    <field name="zoho_record_name"/>
+                                    <field name="record_type"/>
+                                    <field name="status"/>
+                                    <field name="odoo_record_name"/>
+                                    <field name="message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_import_history_tree" model="ir.ui.view">
+        <field name="name">zoho.import.history.tree</field>
+        <field name="model">zoho.import.history</field>
+        <field name="arch" type="xml">
+            <tree string="Import History" decoration-success="status == 'completed'" decoration-info="status == 'in_progress'" decoration-warning="status == 'partially_completed'" decoration-danger="status == 'failed'">
+                <field name="name"/>
+                <field name="import_type"/>
+                <field name="import_date"/>
+                <field name="user_id"/>
+                <field name="status"/>
+                <field name="total_records"/>
+                <field name="successful_records"/>
+                <field name="failed_records"/>
+                <field name="skipped_records"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_import_history_search" model="ir.ui.view">
+        <field name="name">zoho.import.history.search</field>
+        <field name="model">zoho.import.history</field>
+        <field name="arch" type="xml">
+            <search string="Search Import History">
+                <field name="name"/>
+                <field name="import_type"/>
+                <field name="user_id"/>
+                <filter string="Draft" name="draft" domain="[('status', '=', 'draft')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('status', '=', 'in_progress')]"/>
+                <filter string="Completed" name="completed" domain="[('status', '=', 'completed')]"/>
+                <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                <filter string="Partially Completed" name="partially_completed" domain="[('status', '=', 'partially_completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Import Type" name="group_by_import_type" context="{'group_by': 'import_type'}"/>
+                    <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
+                    <filter string="User" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Import Date" name="group_by_import_date" context="{'group_by': 'import_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_import_history" model="ir.actions.act_window">
+        <field name="name">Import History</field>
+        <field name="res_model">zoho.import.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_import_history_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No import history yet
+            </p>
+            <p>
+                Import data from Zoho Books to create import history records.
+            </p>
+        </field>
+    </record>
+
+    <!-- Import Log Views -->
+    <record id="view_zoho_import_log_form" model="ir.ui.view">
+        <field name="name">zoho.import.log.form</field>
+        <field name="model">zoho.import.log</field>
+        <field name="arch" type="xml">
+            <form string="Import Log">
+                <header>
+                    <button name="action_view_zoho_data" string="View Zoho Data" type="object" class="oe_highlight" attrs="{'invisible': [('zoho_data', '=', False)]}"/>
+                    <button name="action_view_odoo_record" string="View Odoo Record" type="object" class="btn-primary" attrs="{'invisible': ['|', ('odoo_record_model', '=', False), ('odoo_record_id', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="import_history_id"/>
+                            <field name="zoho_record_id"/>
+                            <field name="zoho_record_name"/>
+                            <field name="record_type"/>
+                        </group>
+                        <group>
+                            <field name="status"/>
+                            <field name="odoo_record_model"/>
+                            <field name="odoo_record_id"/>
+                            <field name="odoo_record_name"/>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                    <group string="Message">
+                        <field name="message" nolabel="1"/>
+                    </group>
+                    <group string="Zoho Data" attrs="{'invisible': [('zoho_data', '=', False)]}">
+                        <field name="zoho_data" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_zoho_import_log_tree" model="ir.ui.view">
+        <field name="name">zoho.import.log.tree</field>
+        <field name="model">zoho.import.log</field>
+        <field name="arch" type="xml">
+            <tree string="Import Logs" decoration-success="status == 'success'" decoration-warning="status == 'skipped'" decoration-danger="status == 'failed'">
+                <field name="create_date"/>
+                <field name="zoho_record_name"/>
+                <field name="record_type"/>
+                <field name="status"/>
+                <field name="odoo_record_name"/>
+                <field name="message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_zoho_import_log_search" model="ir.ui.view">
+        <field name="name">zoho.import.log.search</field>
+        <field name="model">zoho.import.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Import Logs">
+                <field name="zoho_record_name"/>
+                <field name="zoho_record_id"/>
+                <field name="odoo_record_name"/>
+                <field name="message"/>
+                <filter string="Success" name="success" domain="[('status', '=', 'success')]"/>
+                <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                <filter string="Skipped" name="skipped" domain="[('status', '=', 'skipped')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Record Type" name="group_by_record_type" context="{'group_by': 'record_type'}"/>
+                    <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
+                    <filter string="Import History" name="group_by_import_history" context="{'group_by': 'import_history_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_zoho_import_log" model="ir.actions.act_window">
+        <field name="name">Import Logs</field>
+        <field name="res_model">zoho.import.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_zoho_import_log_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No import logs yet
+            </p>
+            <p>
+                Import data from Zoho Books to create import logs.
+            </p>
+        </field>
+    </record>
+
+    <!-- Zoho Data Viewer Form -->
+    <record id="view_zoho_data_viewer_form" model="ir.ui.view">
+        <field name="name">zoho.data.viewer.form</field>
+        <field name="model">zoho.data.viewer</field>
+        <field name="arch" type="xml">
+            <form string="Zoho Data">
+                <sheet>
+                    <field name="data" widget="ace" options="{'mode': 'json'}" readonly="1"/>
+                </sheet>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
